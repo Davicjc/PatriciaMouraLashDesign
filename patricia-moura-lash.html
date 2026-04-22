@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patrícia Moura · Lash Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #6B2737;
+    --wine-dark: #4A1A25;
+    --rose: #C4878A;
+    --blush: #E8C4C4;
+    --cream: #FAF3EE;
+    --cream-dark: #F0E6DC;
+    --text: #2C1A1D;
+    --text-light: #7A5A5E;
+    --white: #FFFFFF;
+    --shadow: rgba(107,39,55,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(250,243,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,135,138,0.2);
+    transition: all 0.3s;
+  }
+
+  nav.scrolled {
+    padding: 14px 60px;
+    box-shadow: 0 4px 30px var(--shadow);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--wine);
+    letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo span { font-style: italic; font-weight: 300; color: var(--rose); }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-light); text-decoration: none;
+    font-weight: 500; transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--wine); }
+
+  .nav-cta {
+    background: var(--wine);
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--wine-dark) !important; color: white !important; }
+
+  /* MOBILE NAV */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+
+  .hamburger span {
+    width: 24px; height: 2px; background: var(--wine);
+    transition: all 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, var(--cream) 0%, #F5E8E0 40%, #EDD4D4 100%);
+  }
+
+  .hero-ornament {
+    position: absolute; right: -80px; top: -80px;
+    width: 600px; height: 600px; z-index: 0;
+    background: radial-gradient(circle, rgba(196,135,138,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-ornament2 {
+    position: absolute; left: -100px; bottom: -100px;
+    width: 500px; height: 500px; z-index: 0;
+    background: radial-gradient(circle, rgba(107,39,55,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* Floral SVG decorations */
+  .floral-top-right {
+    position: absolute; top: 80px; right: 40px;
+    width: 280px; opacity: 0.15; z-index: 0;
+  }
+
+  .floral-bottom-left {
+    position: absolute; bottom: 40px; left: 40px;
+    width: 220px; opacity: 0.12; z-index: 0;
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 640px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(196,135,138,0.15);
+    border: 1px solid rgba(196,135,138,0.3);
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--wine); margin-bottom: 28px;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero-badge::before {
+    content: '✦';
+    font-size: 0.6rem;
+    color: var(--rose);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--wine-dark);
+    margin-bottom: 24px;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic; color: var(--rose);
+    font-weight: 400;
+  }
+
+  .hero p {
+    font-size: 1.05rem; line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 44px;
+    font-weight: 300;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--wine);
+    color: white; padding: 16px 40px;
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background: var(--wine-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(107,39,55,0.3);
+  }
+
+  .btn-ghost {
+    background: transparent; color: var(--wine);
+    padding: 16px 40px; border: 1px solid var(--rose);
+    border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; font-weight: 500;
+  }
+
+  .btn-ghost:hover {
+    background: var(--wine); color: white;
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    position: absolute; right: 80px; bottom: 100px; z-index: 1;
+    display: flex; gap: 40px;
+    animation: fadeUp 0.9s 0.5s ease both;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600;
+    color: var(--wine); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-light); margin-top: 6px;
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 60px; }
+
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 16px; font-weight: 500;
+  }
+
+  .section-label::before, .section-label::after {
+    content: ''; flex: none;
+    width: 30px; height: 1px; background: var(--rose);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; color: var(--wine-dark); line-height: 1.2;
+  }
+
+  .section-title em { font-style: italic; color: var(--rose); }
+
+  /* SERVICES */
+  #servicos { background: var(--cream-dark); }
+
+  .services-header { text-align: center; margin-bottom: 70px; }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--white);
+    border-radius: 4px; padding: 40px 32px;
+    border: 1px solid rgba(196,135,138,0.2);
+    transition: all 0.3s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+
+  .service-card::before {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--wine), var(--rose));
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px var(--shadow); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(196,135,138,0.1);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 24px;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--wine-dark);
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 0.88rem; color: var(--text-light);
+    line-height: 1.7; margin-bottom: 20px;
+  }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: var(--wine);
+    font-weight: 600;
+  }
+
+  .service-duration {
+    font-size: 0.78rem; color: var(--text-light);
+    letter-spacing: 1px; margin-top: 4px;
+  }
+
+  .service-card.selected {
+    border-color: var(--wine);
+    background: rgba(107,39,55,0.03);
+  }
+
+  /* ABOUT */
+  #sobre {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+    padding: 100px 60px;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-img-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: white; font-style: italic;
+    text-align: center; padding: 20px;
+  }
+
+  .about-badge-float {
+    position: absolute; bottom: -24px; right: -24px;
+    background: var(--wine);
+    color: white; padding: 24px 28px;
+    border-radius: 4px; text-align: center;
+    box-shadow: 0 12px 30px rgba(107,39,55,0.3);
+  }
+
+  .about-badge-float strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; display: block; font-weight: 600;
+  }
+
+  .about-badge-float span { font-size: 0.75rem; letter-spacing: 1.5px; opacity: 0.8; }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem; font-weight: 300; color: var(--wine-dark);
+    line-height: 1.2; margin-bottom: 24px;
+  }
+
+  .about-text h2 em { font-style: italic; color: var(--rose); }
+
+  .about-text p {
+    font-size: 0.95rem; line-height: 1.9; color: var(--text-light);
+    margin-bottom: 16px; font-weight: 300;
+  }
+
+  .about-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-top: 32px;
+  }
+
+  .about-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.88rem; color: var(--text-light);
+  }
+
+  .about-feature::before {
+    content: '✦'; color: var(--rose); font-size: 0.7rem; margin-top: 3px; flex-shrink: 0;
+  }
+
+  /* BOOKING */
+  #agendamento { background: var(--cream-dark); }
+
+  .booking-container {
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .booking-header { text-align: center; margin-bottom: 60px; }
+
+  /* Progress */
+  .progress-bar {
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 50px; gap: 0;
+  }
+
+  .progress-step {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: default;
+  }
+
+  .progress-circle {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 2px solid var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--text-light); background: white;
+    transition: all 0.3s;
+    position: relative; z-index: 1;
+  }
+
+  .progress-step.active .progress-circle {
+    border-color: var(--wine); color: white;
+    background: var(--wine);
+  }
+
+  .progress-step.done .progress-circle {
+    border-color: var(--wine); color: white;
+    background: var(--rose);
+  }
+
+  .progress-label {
+    font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-light); font-weight: 500; white-space: nowrap;
+  }
+
+  .progress-step.active .progress-label { color: var(--wine); }
+
+  .progress-line {
+    width: 80px; height: 1px; background: var(--blush);
+    margin: 0 4px; margin-bottom: 28px; transition: background 0.3s;
+  }
+
+  .progress-line.done { background: var(--rose); }
+
+  /* Step panels */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; animation: fadeUp 0.4s ease; }
+
+  /* Step 1 - Service */
+  .step-services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+  }
+
+  .step-service-card {
+    background: white; border: 2px solid rgba(196,135,138,0.2);
+    border-radius: 4px; padding: 28px 20px; cursor: pointer;
+    transition: all 0.2s; text-align: center;
+  }
+
+  .step-service-card:hover { border-color: var(--rose); }
+
+  .step-service-card.selected {
+    border-color: var(--wine);
+    background: rgba(107,39,55,0.03);
+  }
+
+  .step-service-card.selected .sscard-icon { background: var(--wine); }
+  .step-service-card.selected .sscard-icon span { filter: brightness(10); }
+
+  .sscard-icon {
+    width: 56px; height: 56px; margin: 0 auto 16px;
+    background: rgba(196,135,138,0.12);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; transition: all 0.2s;
+  }
+
+  .sscard-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; color: var(--wine-dark);
+    margin-bottom: 6px;
+  }
+
+  .sscard-price {
+    font-size: 1rem; color: var(--wine); font-weight: 600;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .sscard-time {
+    font-size: 0.75rem; color: var(--text-light); margin-top: 4px;
+  }
+
+  /* Step 2 - Date/Time */
+  .datetime-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+
+  .calendar-box { background: white; border-radius: 4px; padding: 28px; }
+
+  .cal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .cal-month {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--wine-dark);
+  }
+
+  .cal-nav {
+    background: none; border: 1px solid var(--blush);
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; color: var(--wine); font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .cal-nav:hover { background: var(--wine); color: white; border-color: var(--wine); }
+
+  .cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  }
+
+  .cal-day-name {
+    text-align: center; font-size: 0.7rem; letter-spacing: 1px;
+    color: var(--text-light); text-transform: uppercase;
+    padding: 6px 0; font-weight: 500;
+  }
+
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 0.88rem; color: var(--text);
+    border-radius: 50%; cursor: pointer; transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .cal-day:hover:not(.disabled):not(.empty) {
+    background: rgba(196,135,138,0.15); color: var(--wine);
+  }
+
+  .cal-day.selected {
+    background: var(--wine) !important; color: white !important;
+    border-color: var(--wine);
+  }
+
+  .cal-day.today {
+    border-color: var(--rose); color: var(--wine); font-weight: 600;
+  }
+
+  .cal-day.disabled {
+    color: var(--blush); cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .cal-day.empty { cursor: default; }
+
+  .times-box { background: white; border-radius: 4px; padding: 28px; }
+
+  .times-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--wine-dark);
+    margin-bottom: 20px;
+  }
+
+  .times-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+
+  .time-slot {
+    padding: 12px 8px; text-align: center;
+    border: 1px solid rgba(196,135,138,0.3);
+    border-radius: 3px; cursor: pointer;
+    font-size: 0.88rem; color: var(--text-light);
+    transition: all 0.2s;
+  }
+
+  .time-slot:hover:not(.taken) { border-color: var(--wine); color: var(--wine); }
+
+  .time-slot.selected {
+    background: var(--wine); color: white; border-color: var(--wine);
+  }
+
+  .time-slot.taken {
+    background: rgba(196,135,138,0.08);
+    color: var(--blush); cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .times-placeholder {
+    text-align: center; padding: 40px 20px;
+    color: var(--text-light); font-size: 0.88rem; font-style: italic;
+  }
+
+  /* Step 3 - Anamnese */
+  .anamnese-form { background: white; border-radius: 4px; padding: 40px; }
+
+  .form-section { margin-bottom: 36px; }
+
+  .form-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--wine-dark);
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--blush);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-row.single { grid-template-columns: 1fr; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label {
+    font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-light); font-weight: 500;
+  }
+
+  .form-input {
+    border: 1px solid rgba(196,135,138,0.3); border-radius: 3px;
+    padding: 12px 16px; font-family: 'Jost', sans-serif;
+    font-size: 0.9rem; color: var(--text); background: var(--cream);
+    transition: border 0.2s; outline: none;
+  }
+
+  .form-input:focus { border-color: var(--wine); background: white; }
+
+  .radio-group {
+    display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+  }
+
+  .radio-option {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+
+  .radio-option input[type="radio"] { accent-color: var(--wine); }
+
+  .radio-option label {
+    font-size: 0.88rem; color: var(--text-light); cursor: pointer;
+  }
+
+  .question-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid rgba(196,135,138,0.12);
+    gap: 20px;
+  }
+
+  .question-text {
+    font-size: 0.9rem; color: var(--text); flex: 1;
+  }
+
+  .question-options {
+    display: flex; gap: 20px; flex-shrink: 0;
+  }
+
+  .question-options label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; color: var(--text-light); cursor: pointer;
+  }
+
+  .question-options input { accent-color: var(--wine); }
+
+  .consent-box {
+    background: rgba(107,39,55,0.04);
+    border: 1px solid rgba(196,135,138,0.3);
+    border-radius: 4px; padding: 24px;
+    font-size: 0.85rem; line-height: 1.7; color: var(--text-light);
+    margin-top: 8px;
+  }
+
+  .consent-check {
+    display: flex; align-items: flex-start; gap: 12px; margin-top: 16px;
+    cursor: pointer;
+  }
+
+  .consent-check input { accent-color: var(--wine); margin-top: 3px; flex-shrink: 0; }
+  .consent-check span { font-size: 0.85rem; color: var(--text); }
+
+  /* Step 4 - Confirmation */
+  .confirm-box {
+    background: white; border-radius: 4px; padding: 50px;
+    text-align: center; max-width: 520px; margin: 0 auto;
+  }
+
+  .confirm-icon {
+    width: 80px; height: 80px; margin: 0 auto 24px;
+    background: rgba(196,135,138,0.12); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+  }
+
+  .confirm-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; color: var(--wine-dark);
+    margin-bottom: 12px; font-weight: 400;
+  }
+
+  .confirm-title em { font-style: italic; color: var(--rose); }
+
+  .confirm-text {
+    font-size: 0.92rem; color: var(--text-light); line-height: 1.7; margin-bottom: 32px;
+  }
+
+  .confirm-details {
+    background: var(--cream-dark); border-radius: 4px; padding: 24px;
+    text-align: left; margin-bottom: 32px;
+  }
+
+  .confirm-detail-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid rgba(196,135,138,0.15);
+    font-size: 0.88rem;
+  }
+
+  .confirm-detail-row:last-child { border-bottom: none; }
+
+  .confirm-detail-row strong { color: var(--text-light); font-weight: 500; }
+  .confirm-detail-row span { color: var(--wine-dark); font-weight: 600; }
+
+  /* Navigation buttons */
+  .step-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px;
+  }
+
+  .btn-back {
+    background: none; border: 1px solid var(--blush);
+    color: var(--text-light); padding: 14px 32px;
+    border-radius: 2px; cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.2s; font-weight: 500;
+  }
+
+  .btn-back:hover { border-color: var(--wine); color: var(--wine); }
+
+  /* POST-PROCEDURE MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(44,26,29,0.7); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
+
+  .modal-box {
+    background: var(--white); border-radius: 4px;
+    max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.4s ease;
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--wine-dark), var(--wine));
+    padding: 40px 40px 32px; text-align: center; position: relative;
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: rgba(255,255,255,0.2); border: none;
+    color: white; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem; display: flex;
+    align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.35); }
+
+  .modal-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: white; font-weight: 300; margin-bottom: 4px;
+  }
+
+  .modal-logo strong { font-weight: 600; }
+  .modal-logo em { font-style: italic; color: rgba(255,255,255,0.7); }
+
+  .modal-subtitle {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .modal-content { padding: 40px; }
+
+  .modal-section { margin-bottom: 32px; }
+
+  .modal-section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 600; color: var(--wine-dark);
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--blush);
+  }
+
+  .modal-section-title span { font-size: 1.1rem; }
+
+  .modal-section p {
+    font-size: 0.9rem; color: var(--text-light); line-height: 1.8;
+    margin-bottom: 10px; font-weight: 300;
+  }
+
+  .modal-list { list-style: none; }
+
+  .modal-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.9rem; color: var(--text-light); line-height: 1.7;
+    padding: 6px 0;
+  }
+
+  .modal-list li::before {
+    content: '•'; color: var(--rose); font-size: 1.2rem; flex-shrink: 0; margin-top: -2px;
+  }
+
+  .next-appt {
+    background: linear-gradient(135deg, rgba(107,39,55,0.05), rgba(196,135,138,0.08));
+    border: 1px solid rgba(196,135,138,0.25);
+    border-radius: 4px; padding: 20px 24px;
+    text-align: center;
+  }
+
+  .next-appt p {
+    font-size: 0.8rem; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .next-appt-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; color: var(--wine); font-weight: 600;
+  }
+
+  /* GALLERY */
+  #galeria { background: var(--white); }
+
+  .gallery-header { text-align: center; margin-bottom: 60px; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px; max-width: 1100px; margin: 0 auto;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1; border-radius: 3px;
+    overflow: hidden; position: relative; cursor: pointer;
+  }
+
+  .gallery-item:nth-child(3) { grid-row: span 2; aspect-ratio: auto; }
+  .gallery-item:nth-child(7) { grid-column: span 2; aspect-ratio: auto; }
+
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    min-height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; transition: transform 0.3s;
+  }
+
+  .gallery-item:hover .gallery-placeholder { transform: scale(1.05); }
+
+  .g1 { background: linear-gradient(135deg, #C4878A, #8B4C50); }
+  .g2 { background: linear-gradient(135deg, #D4A0A0, #9A6060); }
+  .g3 { background: linear-gradient(135deg, #6B2737, #4A1A25); }
+  .g4 { background: linear-gradient(135deg, #E8C4C4, #C4878A); }
+  .g5 { background: linear-gradient(135deg, #9A5560, #6B2737); }
+  .g6 { background: linear-gradient(135deg, #BF8585, #8B5555); }
+  .g7 { background: linear-gradient(135deg, #D4A0A0, #9A6060); }
+  .g8 { background: linear-gradient(135deg, #6B2737, #9A5560); }
+
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: rgba(107,39,55,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    color: white; font-size: 1.8rem;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* TESTIMONIALS */
+  #depoimentos { background: var(--cream-dark); }
+
+  .testimonials-header { text-align: center; margin-bottom: 60px; }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: white; border-radius: 4px; padding: 36px 32px;
+    border: 1px solid rgba(196,135,138,0.15);
+    transition: transform 0.3s;
+  }
+
+  .testimonial-card:hover { transform: translateY(-4px); }
+
+  .testimonial-stars {
+    color: var(--rose); font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--text);
+    line-height: 1.7; font-style: italic; margin-bottom: 24px;
+  }
+
+  .testimonial-author {
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--wine));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 600; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .author-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+  .author-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+
+  /* CONTACT / FOOTER */
+  .contact-strip {
+    background: linear-gradient(135deg, var(--wine-dark), var(--wine));
+    padding: 80px 60px; text-align: center;
+  }
+
+  .contact-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; color: white; font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .contact-strip h2 em { font-style: italic; color: var(--blush); }
+
+  .contact-strip p {
+    font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 40px;
+  }
+
+  .contact-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-white {
+    background: white; color: var(--wine);
+    padding: 16px 40px; border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; font-weight: 600; transition: all 0.3s;
+  }
+
+  .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
+
+  .btn-outline-white {
+    background: transparent; color: white;
+    padding: 16px 40px; border: 1px solid rgba(255,255,255,0.4); border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; font-weight: 500; transition: all 0.3s;
+  }
+
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+  footer {
+    background: var(--wine-dark); padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: rgba(255,255,255,0.8); font-weight: 300;
+  }
+
+  .footer-logo em { font-style: italic; color: var(--blush); }
+
+  .footer-copy {
+    font-size: 0.78rem; color: rgba(255,255,255,0.4);
+  }
+
+  .footer-links {
+    display: flex; gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem; color: rgba(255,255,255,0.5);
+    text-decoration: none; transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--blush); }
+
+  /* SOCIAL FLOAT */
+  .social-float {
+    position: fixed; bottom: 30px; right: 30px; z-index: 900;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .social-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; font-size: 1.2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: all 0.2s; text-decoration: none;
+  }
+
+  .social-btn.whatsapp { background: #25D366; color: white; }
+  .social-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+  .social-btn:hover { transform: scale(1.1) translateY(-2px); }
+
+  /* UTILS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .text-center { text-align: center; }
+  .mb8 { margin-bottom: 8px; }
+  .mb16 { margin-bottom: 16px; }
+  .mt24 { margin-top: 24px; }
+
+  /* ALERT */
+  .alert {
+    padding: 14px 20px; border-radius: 3px; margin-bottom: 20px;
+    font-size: 0.88rem; display: none;
+  }
+
+  .alert.error { background: rgba(200,50,50,0.08); border: 1px solid rgba(200,50,50,0.3); color: #c03030; }
+  .alert.success { background: rgba(50,150,80,0.08); border: 1px solid rgba(50,150,80,0.3); color: #2d7a4a; }
+  .alert.visible { display: block; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { display: none; }
+
+    section { padding: 70px 24px; }
+
+    #sobre {
+      grid-template-columns: 1fr; gap: 40px; padding: 70px 24px;
+    }
+
+    .about-badge-float { right: 0; }
+
+    .datetime-grid { grid-template-columns: 1fr; }
+
+    .form-row { grid-template-columns: 1fr; }
+
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(3) { grid-row: auto; }
+    .gallery-item:nth-child(7) { grid-column: auto; }
+
+    footer { flex-direction: column; text-align: center; padding: 32px 24px; }
+
+    .contact-strip { padding: 60px 24px; }
+    .contact-strip h2 { font-size: 2rem; }
+
+    .modal-content { padding: 24px; }
+    .modal-header { padding: 32px 24px; }
+
+    .confirm-box { padding: 32px 24px; }
+  }
+
+  /* Mobile nav open */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 999;
+    background: var(--cream); padding: 80px 32px 32px;
+    display: none; flex-direction: column; gap: 8px;
+  }
+
+  .mobile-menu.open { display: flex; animation: fadeIn 0.2s ease; }
+
+  .mobile-menu a {
+    font-size: 1.8rem; font-family: 'Cormorant Garamond', serif;
+    color: var(--wine-dark); text-decoration: none; padding: 12px 0;
+    border-bottom: 1px solid rgba(196,135,138,0.2);
+    font-style: italic;
+  }
+
+  .mobile-menu-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--wine); cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Patrícia Moura · <span>Lash Designer</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#galeria">Portfólio</a></li>
+    <li><a href="#depoimentos">Avaliações</a></li>
+    <li><a href="#agendamento" class="nav-cta">Agendar</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
+  <a href="#servicos" onclick="toggleMobileMenu()">Serviços</a>
+  <a href="#sobre" onclick="toggleMobileMenu()">Sobre mim</a>
+  <a href="#galeria" onclick="toggleMobileMenu()">Portfólio</a>
+  <a href="#depoimentos" onclick="toggleMobileMenu()">Avaliações</a>
+  <a href="#agendamento" onclick="toggleMobileMenu()">Agendar agora</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-ornament2"></div>
+
+  <!-- Floral SVG decorations -->
+  <svg class="floral-top-right" viewBox="0 0 300 300" fill="none">
+    <g opacity="0.8">
+      <ellipse cx="150" cy="60" rx="30" ry="80" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(0 150 150)"/>
+      <ellipse cx="150" cy="60" rx="30" ry="80" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(45 150 150)"/>
+      <ellipse cx="150" cy="60" rx="30" ry="80" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(90 150 150)"/>
+      <ellipse cx="150" cy="60" rx="30" ry="80" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(135 150 150)"/>
+      <circle cx="150" cy="150" r="12" fill="#6B2737" opacity="0.3"/>
+    </g>
+  </svg>
+
+  <svg class="floral-bottom-left" viewBox="0 0 300 300" fill="none">
+    <g opacity="0.8">
+      <ellipse cx="150" cy="60" rx="25" ry="70" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(30 150 150)"/>
+      <ellipse cx="150" cy="60" rx="25" ry="70" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(90 150 150)"/>
+      <ellipse cx="150" cy="60" rx="25" ry="70" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(150 150 150)"/>
+      <ellipse cx="150" cy="60" rx="25" ry="70" fill="none" stroke="#6B2737" stroke-width="1.5" transform="rotate(210 150 150)"/>
+      <circle cx="150" cy="150" r="10" fill="#6B2737" opacity="0.3"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">Lash Designer Certificada · Uberlândia/MG</div>
+    <h1>Olhos que<br>contam sua <em>história.</em></h1>
+    <p>Extensão de cílios com técnica refinada, produtos premium e o cuidado que você merece. Cada fio aplicado com precisão e arte.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollToBooking()">Agendar Agora</button>
+      <button class="btn-ghost" onclick="document.getElementById('sobre').scrollIntoView({behavior:'smooth'})">Conheça meu trabalho</button>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Clientes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Avaliação</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3+</div>
+      <div class="stat-label">Anos de exp.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="services-header">
+    <div class="section-label">O que ofereço</div>
+    <h2 class="section-title">Serviços & <em>Técnicas</em></h2>
+    <p style="color:var(--text-light);margin-top:12px;font-size:0.95rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7">Cada procedimento é personalizado para realçar a beleza única de cada cliente.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">👁️</div>
+      <div class="service-name">Fio a Fio Clássico</div>
+      <div class="service-desc">Técnica natural e elegante onde um fio é aplicado em cada cílio natural. Ideal para um look discreto e sofisticado.</div>
+      <div class="service-price">R$ 120</div>
+      <div class="service-duration">⏱ 2h – 2h30</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Volume Russo</div>
+      <div class="service-desc">Leques com vários fios ultrafinos criam volume dramático e deslumbrante. Para um olhar marcante e encantador.</div>
+      <div class="service-price">R$ 200</div>
+      <div class="service-duration">⏱ 3h – 3h30</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💫</div>
+      <div class="service-name">Híbrido</div>
+      <div class="service-desc">A combinação perfeita entre o clássico e o volume russo. Resultado natural com textura e dimensão únicos.</div>
+      <div class="service-price">R$ 160</div>
+      <div class="service-duration">⏱ 2h30 – 3h</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌸</div>
+      <div class="service-name">Manutenção</div>
+      <div class="service-desc">Reposição dos fios caídos para manter o visual impecável. Recomendada a cada 21–30 dias.</div>
+      <div class="service-price">A partir de R$ 80</div>
+      <div class="service-duration">⏱ 1h30 – 2h</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre" style="padding:0">
+  <div id="sobre" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;padding:100px 60px">
+    <div class="about-visual">
+      <div class="about-img-placeholder">
+        ✨ Patrícia Moura<br><small style="font-size:0.85rem;opacity:0.8">Sua foto aqui</small>
+      </div>
+      <div class="about-badge-float">
+        <strong>100%</strong>
+        <span>Satisfação garantida</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">Sobre mim</div>
+      <h2>Paixão por realçar <em>sua beleza</em></h2>
+      <p>Sou Patrícia Moura, lash designer certificada apaixonada por transformar olhares. Com técnica apurada e atenção aos detalhes, cada procedimento é uma experiência única de autocuidado.</p>
+      <p>Trabalho apenas com produtos de alta qualidade, priorizando a saúde dos seus cílios naturais em cada aplicação.</p>
+      <div class="about-features">
+        <div class="about-feature">Certificação em diversas técnicas</div>
+        <div class="about-feature">Produtos premium importados</div>
+        <div class="about-feature">Atendimento personalizado</div>
+        <div class="about-feature">Ambiente seguro e aconchegante</div>
+        <div class="about-feature">Pontualidade e dedicação</div>
+        <div class="about-feature">Pós-procedimento completo</div>
+      </div>
+      <div style="margin-top:32px">
+        <button class="btn-primary" onclick="scrollToBooking()">Agendar meu horário</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria">
+  <div class="gallery-header">
+    <div class="section-label" style="justify-content:center">Portfólio</div>
+    <h2 class="section-title">Meu <em>Trabalho</em></h2>
+    <p style="color:var(--text-light);margin-top:12px;font-size:0.95rem">Cada resultado é único, assim como você.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item"><div class="gallery-placeholder g1">👁️</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder g2">✨</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item" style="min-height:372px"><div class="gallery-placeholder g3" style="min-height:372px">💫</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder g4">🌸</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder g5">👁️</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder g6">✨</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item" style="min-height:180px"><div class="gallery-placeholder g7" style="min-height:180px">💫</div><div class="gallery-overlay">🔍</div></div>
+    <div class="gallery-item"><div class="gallery-placeholder g8">🌸</div><div class="gallery-overlay">🔍</div></div>
+  </div>
+
+  <div style="text-align:center;margin-top:40px">
+    <p style="color:var(--text-light);font-size:0.88rem;margin-bottom:16px">Veja mais no Instagram</p>
+    <a href="#" class="btn-primary" style="display:inline-block;text-decoration:none">@patriciamoura.lash</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="depoimentos">
+  <div class="testimonials-header">
+    <div class="section-label" style="justify-content:center">Avaliações</div>
+    <h2 class="section-title">O que dizem <em>minhas clientes</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Amei cada detalhe! A Patrícia é super caprichosa e o resultado ficou ainda melhor do que eu esperava. Já agendei a manutenção!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">AM</div>
+        <div>
+          <div class="author-name">Ana Maria S.</div>
+          <div class="author-sub">Cliente fidelíssima · Volume Russo</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"Lugar lindo, atendimento impecável e o resultado... perfeito! Meus cílios nunca ficaram tão lindos. Recomendo de olhos fechados!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">JL</div>
+        <div>
+          <div class="author-name">Juliana L.</div>
+          <div class="author-sub">Nova cliente · Híbrido</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">"A Pati tem uma habilidade incrível! Me deixou bem explicada sobre todo o processo e os cuidados. Profissional e encantadora!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">RC</div>
+        <div>
+          <div class="author-name">Renata C.</div>
+          <div class="author-sub">Cliente há 1 ano · Fio a Fio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="agendamento">
+  <div class="booking-container">
+    <div class="booking-header">
+      <div class="section-label" style="justify-content:center">Agendamento Online</div>
+      <h2 class="section-title">Agende seu <em>horário</em></h2>
+      <p style="color:var(--text-light);margin-top:12px;font-size:0.95rem">Simples, rápido e sem precisar ligar. Em poucos passos, seu horário estará garantido.</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-bar">
+      <div class="progress-step active" id="prog1">
+        <div class="progress-circle">1</div>
+        <div class="progress-label">Serviço</div>
+      </div>
+      <div class="progress-line" id="line1"></div>
+      <div class="progress-step" id="prog2">
+        <div class="progress-circle">2</div>
+        <div class="progress-label">Data & Hora</div>
+      </div>
+      <div class="progress-line" id="line2"></div>
+      <div class="progress-step" id="prog3">
+        <div class="progress-circle">3</div>
+        <div class="progress-label">Ficha</div>
+      </div>
+      <div class="progress-line" id="line3"></div>
+      <div class="progress-step" id="prog4">
+        <div class="progress-circle">4</div>
+        <div class="progress-label">Confirmação</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: Service -->
+    <div class="step-panel active" id="step1">
+      <div class="step-services-grid">
+        <div class="step-service-card" onclick="selectService(this,'Fio a Fio Clássico','R$ 120','2h–2h30')">
+          <div class="sscard-icon"><span>👁️</span></div>
+          <div class="sscard-name">Fio a Fio Clássico</div>
+          <div class="sscard-price">R$ 120</div>
+          <div class="sscard-time">⏱ 2h – 2h30</div>
+        </div>
+        <div class="step-service-card" onclick="selectService(this,'Volume Russo','R$ 200','3h–3h30')">
+          <div class="sscard-icon"><span>✨</span></div>
+          <div class="sscard-name">Volume Russo</div>
+          <div class="sscard-price">R$ 200</div>
+          <div class="sscard-time">⏱ 3h – 3h30</div>
+        </div>
+        <div class="step-service-card" onclick="selectService(this,'Híbrido','R$ 160','2h30–3h')">
+          <div class="sscard-icon"><span>💫</span></div>
+          <div class="sscard-name">Híbrido</div>
+          <div class="sscard-price">R$ 160</div>
+          <div class="sscard-time">⏱ 2h30 – 3h</div>
+        </div>
+        <div class="step-service-card" onclick="selectService(this,'Manutenção','a partir de R$ 80','1h30–2h')">
+          <div class="sscard-icon"><span>🌸</span></div>
+          <div class="sscard-name">Manutenção</div>
+          <div class="sscard-price">A partir de R$ 80</div>
+          <div class="sscard-time">⏱ 1h30 – 2h</div>
+        </div>
+      </div>
+      <div id="alert1" class="alert error">Por favor, selecione um serviço para continuar.</div>
+      <div class="step-nav">
+        <div></div>
+        <button class="btn-primary" onclick="goToStep(2)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Date & Time -->
+    <div class="step-panel" id="step2">
+      <div class="datetime-grid">
+        <!-- Calendar -->
+        <div class="calendar-box">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="prevMonth()">‹</button>
+            <div class="cal-month" id="calMonth"></div>
+            <button class="cal-nav" onclick="nextMonth()">›</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+
+        <!-- Times -->
+        <div class="times-box">
+          <div class="times-title">Horários disponíveis</div>
+          <div id="timesContent">
+            <div class="times-placeholder">Selecione uma data no calendário para ver os horários disponíveis.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="alert2" class="alert error">Por favor, selecione data e horário.</div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="goToStep(1)">← Voltar</button>
+        <button class="btn-primary" onclick="goToStep(3)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Anamnese -->
+    <div class="step-panel" id="step3">
+      <div class="anamnese-form">
+
+        <!-- Dados Pessoais -->
+        <div class="form-section">
+          <div class="form-section-title">📋 Dados Pessoais</div>
+          <div class="form-row mb16">
+            <div class="form-group">
+              <label class="form-label">Nome completo *</label>
+              <input class="form-input" id="nome" type="text" placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data de nascimento *</label>
+              <input class="form-input" id="nascimento" type="date">
+            </div>
+          </div>
+          <div class="form-row mb16">
+            <div class="form-group">
+              <label class="form-label">WhatsApp *</label>
+              <input class="form-input" id="whatsapp" type="tel" placeholder="(34) 99999-9999">
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mail</label>
+              <input class="form-input" id="email" type="email" placeholder="seu@email.com">
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">Endereço</label>
+              <input class="form-input" id="endereco" type="text" placeholder="Rua, número, bairro">
+            </div>
+          </div>
+        </div>
+
+        <!-- Avaliação de Saúde -->
+        <div class="form-section">
+          <div class="form-section-title">🩺 Avaliação de Saúde</div>
+
+          <div class="question-row">
+            <span class="question-text">Alergia a adesivos, látex ou cosméticos?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q1" value="sim"> Sim</label>
+              <label><input type="radio" name="q1" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Já teve reação negativa com cílios antes?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q2" value="sim"> Sim</label>
+              <label><input type="radio" name="q2" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Gestante ou lactante?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q3" value="sim"> Sim</label>
+              <label><input type="radio" name="q3" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Usa lentes de contato?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q4" value="sim"> Sim</label>
+              <label><input type="radio" name="q4" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Seu cabelo já danificou por mechas?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q5" value="sim"> Sim</label>
+              <label><input type="radio" name="q5" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Problemas oculares? (glaucoma, blefarite)</span>
+            <div class="question-options">
+              <label><input type="radio" name="q6" value="sim"> Sim</label>
+              <label><input type="radio" name="q6" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Dorme de que lado?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q7" value="direito"> Direito</label>
+              <label><input type="radio" name="q7" value="esquerdo"> Esquerdo</label>
+              <label><input type="radio" name="q7" value="brucos"> De bruços</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Usa medicamentos ou colírios frequentes?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q8" value="sim"> Sim</label>
+              <label><input type="radio" name="q8" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Fez algum procedimento nos olhos?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q9" value="sim"> Sim</label>
+              <label><input type="radio" name="q9" value="nao" checked> Não</label>
+            </div>
+          </div>
+          <div class="question-row">
+            <span class="question-text">Está em tratamento oncológico?</span>
+            <div class="question-options">
+              <label><input type="radio" name="q10" value="sim"> Sim</label>
+              <label><input type="radio" name="q10" value="nao" checked> Não</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Observações -->
+        <div class="form-section">
+          <div class="form-section-title">💬 Observações</div>
+          <div class="form-group">
+            <label class="form-label">Alguma observação, alergia ou preferência?</label>
+            <textarea class="form-input" id="obs" rows="3" placeholder="Conte-me mais sobre suas preferências ou histórico..." style="resize:vertical"></textarea>
+          </div>
+        </div>
+
+        <!-- Consentimento -->
+        <div class="form-section">
+          <div class="form-section-title">✍️ Termo de Consentimento</div>
+          <div class="consent-box">
+            <strong>Confirmo que as informações prestadas são verdadeiras.</strong> Fui orientada sobre os cuidados pós-procedimento e compreendo as restrições necessárias.<br><br>
+            <strong>AUTORIZAÇÃO DE IMAGEM:</strong> Autorizo a captura e uso de fotos/vídeos para portfólio profissional e divulgação em redes sociais por Patrícia Moura Lash Designer.
+          </div>
+          <label class="consent-check" id="consentCheck">
+            <input type="checkbox" id="consent">
+            <span>Li e concordo com os termos acima, incluindo a autorização de uso de imagem.</span>
+          </label>
+        </div>
+
+      </div>
+      <div id="alert3" class="alert error"></div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="goToStep(2)">← Voltar</button>
+        <button class="btn-primary" onclick="submitBooking()">Confirmar Agendamento ✓</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Confirmation -->
+    <div class="step-panel" id="step4">
+      <div class="confirm-box">
+        <div class="confirm-icon">🎉</div>
+        <div class="confirm-title">Agendado com <em>sucesso!</em></div>
+        <div class="confirm-text">Seu horário foi reservado! Em breve, Patrícia entrará em contato para confirmar via WhatsApp.</div>
+
+        <div class="confirm-details" id="confirmDetails"></div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button class="btn-primary" onclick="openWhatsApp()" style="width:100%">💬 Confirmar pelo WhatsApp</button>
+          <button class="btn-ghost" onclick="resetBooking()" style="width:100%">Fazer novo agendamento</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<div class="contact-strip">
+  <h2>Pronta para ter <em>cílios dos sonhos</em>?</h2>
+  <p>Agende agora ou tire suas dúvidas pelo WhatsApp</p>
+  <div class="contact-btns">
+    <button class="btn-white" onclick="scrollToBooking()">Agendar Online</button>
+    <a href="https://wa.me/5534999999999" class="btn-outline-white" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none">💬 WhatsApp</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Patrícia Moura · <em>Lash Designer</em></div>
+  <div class="footer-links">
+    <a href="#inicio">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#galeria">Portfólio</a>
+    <a href="#agendamento">Agendar</a>
+  </div>
+  <div class="footer-copy">© 2025 Patrícia Moura Lash Designer · Todos os direitos reservados</div>
+</footer>
+
+<!-- SOCIAL FLOAT -->
+<div class="social-float">
+  <a href="https://wa.me/5534999999999" class="social-btn whatsapp" title="WhatsApp">💬</a>
+  <a href="#" class="social-btn instagram" title="Instagram">📷</a>
+</div>
+
+<!-- POST-PROCEDURE MODAL -->
+<div class="modal-overlay" id="postModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-logo"><strong>Patrícia Moura</strong> · <em>Lash Designer</em></div>
+      <div class="modal-subtitle">Cuidados Pós-Procedimento</div>
+    </div>
+    <div class="modal-content">
+
+      <div class="modal-section">
+        <div class="modal-section-title"><span>⏰</span> Primeiras 24 a 48 horas</div>
+        <p>Este é o período crítico para a secagem completa da cola (polimerização). Siga com atenção:</p>
+        <ul class="modal-list">
+          <li><strong>Evite molhar:</strong> Não lave os olhos nem tome banhos muito quentes com vapor.</li>
+          <li><strong>Nada de sauna ou piscina:</strong> O calor excessivo e a umidade podem comprometer a aderência.</li>
+          <li><strong>Não toque:</strong> Evite mexer ou puxar os fios para que sequem na posição correta.</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title"><span>🧼</span> Higiene e Limpeza Diária</div>
+        <p>Ao contrário do que muitos pensam, lavar os cílios é obrigatório para evitar o acúmulo de oleosidade e resíduos.</p>
+        <ul class="modal-list">
+          <li><strong>Use produtos específicos:</strong> Utilize um shampoo neutro (como o infantil) diluído em água ou uma espuma de limpeza própria para extensões.</li>
+          <li><strong>Movimentos leves:</strong> Lave com movimentos circulares suaves usando a ponta dos dedos ou um pincel macio.</li>
+          <li><strong>Enxágue bem:</strong> Use água fria ou morna.</li>
+          <li><strong>Secagem:</strong> Não esfregue a toalha. Apenas pressione levemente e, se necessário, use um ventilador de mão ou secador no modo frio a uma distância segura.</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title"><span>💄</span> Maquiagem e Produtos</div>
+        <ul class="modal-list">
+          <li><strong>Livre de óleo:</strong> Use apenas demaquilantes à base de água (água micelar). O óleo dissolve a cola das extensões.</li>
+          <li>Evite máscara de cílios sobre as extensões, pois dificulta a limpeza.</li>
+          <li>Não use rímel à prova d'água, pois requer solventes que prejudicam a aderência.</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title"><span>😴</span> Cuidados Gerais</div>
+        <ul class="modal-list">
+          <li>Durma de barriga para cima sempre que possível para não amassar os fios.</li>
+          <li>Use travesseiro de cetim ou seda para reduzir o atrito.</li>
+          <li>Escove os cílios diariamente com um escovinha limpa, de baixo para cima.</li>
+          <li>Evite coçar os olhos ou esfregar o rosto.</li>
+        </ul>
+      </div>
+
+      <div class="next-appt">
+        <p>Data recomendada para o próximo procedimento</p>
+        <div class="next-appt-date" id="nextApptDate">____/______/______</div>
+      </div>
+
+      <div style="text-align:center;margin-top:28px">
+        <button class="btn-primary" onclick="closeModal()">Entendi! Vou cuidar bem dos meus cílios 🌸</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── NAV ───────────────────────────────────────────────────
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function scrollToBooking() {
+    document.getElementById('agendamento').scrollIntoView({behavior:'smooth'});
+  }
+
+  // ─── BOOKING STATE ─────────────────────────────────────────
+  let booking = {
+    service: null, servicePrice: null, serviceDuration: null,
+    date: null, time: null
+  };
+
+  let currentStep = 1;
+  let calYear, calMonth;
+  let takenSlots = {};
+
+  // Initialize with some "taken" slots for demo
+  function initTakenSlots() {
+    const today = new Date();
+    const y = today.getFullYear(), m = today.getMonth();
+    takenSlots[`${y}-${m}-${today.getDate()}`] = ['09:00','10:00','14:00'];
+    takenSlots[`${y}-${m}-${today.getDate()+2}`] = ['11:00','15:00','16:00'];
+    takenSlots[`${y}-${m}-${today.getDate()+4}`] = ['09:00','11:00','13:00','17:00'];
+  }
+
+  initTakenSlots();
+
+  // ─── STEP NAVIGATION ───────────────────────────────────────
+  function goToStep(n) {
+    if (n > currentStep) {
+      if (n === 2 && !booking.service) {
+        showAlert('alert1'); return;
+      }
+      if (n === 3 && (!booking.date || !booking.time)) {
+        showAlert('alert2'); return;
+      }
+    }
+
+    document.getElementById(`step${currentStep}`).classList.remove('active');
+    document.getElementById(`prog${currentStep}`).classList.remove('active');
+    document.getElementById(`prog${currentStep}`).classList.add('done');
+
+    if (n < currentStep) {
+      document.getElementById(`prog${currentStep}`).classList.remove('done');
+      document.getElementById(`prog${n}`).classList.remove('done');
+    }
+
+    currentStep = n;
+    document.getElementById(`step${currentStep}`).classList.add('active');
+    document.getElementById(`prog${currentStep}`).classList.remove('done');
+    document.getElementById(`prog${currentStep}`).classList.add('active');
+
+    // Update lines
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById(`line${i}`).classList.toggle('done', i < currentStep);
+    }
+
+    document.getElementById('agendamento').scrollIntoView({behavior:'smooth'});
+  }
+
+  function showAlert(id, msg) {
+    const el = document.getElementById(id);
+    if (msg) el.textContent = msg;
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 3000);
+  }
+
+  // ─── SERVICE SELECTION ─────────────────────────────────────
+  function selectService(el, name, price, duration) {
+    document.querySelectorAll('.step-service-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    booking.service = name;
+    booking.servicePrice = price;
+    booking.serviceDuration = duration;
+  }
+
+  // ─── CALENDAR ──────────────────────────────────────────────
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const today = new Date();
+
+  function initCalendar() {
+    calYear = today.getFullYear();
+    calMonth = today.getMonth();
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    document.getElementById('calMonth').textContent = `${months[calMonth]} ${calYear}`;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+    days.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-day-name'; el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day empty';
+      grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+
+      const date = new Date(calYear, calMonth, d);
+      const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const isSunday = date.getDay() === 0;
+
+      if (isPast || isSunday) {
+        el.classList.add('disabled');
+      } else {
+        if (date.getDate() === today.getDate() &&
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear()) {
+          el.classList.add('today');
+        }
+
+        const selectedStr = booking.date ? `${booking.date.getFullYear()}-${booking.date.getMonth()}-${booking.date.getDate()}` : null;
+        const thisStr = `${calYear}-${calMonth}-${d}`;
+        if (selectedStr === thisStr) el.classList.add('selected');
+
+        el.onclick = () => selectDate(d, el);
+      }
+
+      grid.appendChild(el);
+    }
+  }
+
+  function selectDate(d, el) {
+    booking.date = new Date(calYear, calMonth, d);
+    booking.time = null;
+    document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    renderTimes();
+  }
+
+  function renderTimes() {
+    const key = `${calYear}-${calMonth}-${booking.date.getDate()}`;
+    const taken = takenSlots[key] || [];
+
+    const slots = ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+
+    const grid = document.createElement('div');
+    grid.className = 'times-grid';
+
+    slots.forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'time-slot';
+      el.textContent = t;
+
+      if (taken.includes(t)) {
+        el.classList.add('taken');
+        el.title = 'Horário indisponível';
+      } else {
+        el.onclick = () => selectTime(t, el);
+      }
+
+      grid.appendChild(el);
+    });
+
+    const box = document.getElementById('timesContent');
+    box.innerHTML = '';
+
+    const dateLabel = document.createElement('p');
+    dateLabel.style.cssText = 'font-size:0.85rem;color:var(--text-light);margin-bottom:16px;font-weight:500';
+    const d = booking.date;
+    dateLabel.textContent = `${d.getDate()} de ${months[d.getMonth()]}`;
+    box.appendChild(dateLabel);
+    box.appendChild(grid);
+  }
+
+  function selectTime(t, el) {
+    booking.time = t;
+    document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function prevMonth() {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  }
+
+  function nextMonth() {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  }
+
+  initCalendar();
+
+  // ─── SUBMIT BOOKING ────────────────────────────────────────
+  function submitBooking() {
+    const nome = document.getElementById('nome').value.trim();
+    const whatsapp = document.getElementById('whatsapp').value.trim();
+    const nascimento = document.getElementById('nascimento').value;
+    const consent = document.getElementById('consent').checked;
+
+    if (!nome || !whatsapp || !nascimento) {
+      showAlert('alert3', 'Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+
+    if (!consent) {
+      showAlert('alert3', 'É necessário aceitar o termo de consentimento para prosseguir.');
+      return;
+    }
+
+    // Build confirm details
+    const d = booking.date;
+    const dateStr = `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+
+    document.getElementById('confirmDetails').innerHTML = `
+      <div class="confirm-detail-row"><strong>Nome</strong><span>${nome}</span></div>
+      <div class="confirm-detail-row"><strong>Serviço</strong><span>${booking.service}</span></div>
+      <div class="confirm-detail-row"><strong>Valor</strong><span>${booking.servicePrice}</span></div>
+      <div class="confirm-detail-row"><strong>Data</strong><span>${dateStr}</span></div>
+      <div class="confirm-detail-row"><strong>Horário</strong><span>${booking.time}</span></div>
+      <div class="confirm-detail-row"><strong>Duração</strong><span>${booking.serviceDuration}</span></div>
+    `;
+
+    goToStep(4);
+    // Mark as taken
+    const key = `${calYear}-${calMonth}-${d.getDate()}`;
+    if (!takenSlots[key]) takenSlots[key] = [];
+    takenSlots[key].push(booking.time);
+  }
+
+  function openWhatsApp() {
+    const d = booking.date;
+    const dateStr = `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+    const msg = `Olá Patrícia! Acabei de agendar pelo site:%0A%0A*Serviço:* ${booking.service}%0A*Data:* ${dateStr}%0A*Horário:* ${booking.time}%0A%0APoderia confirmar?`;
+    window.open(`https://wa.me/5534999999999?text=${msg}`, '_blank');
+  }
+
+  function resetBooking() {
+    booking = { service: null, servicePrice: null, serviceDuration: null, date: null, time: null };
+    currentStep = 1;
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('step1').classList.add('active');
+    document.querySelectorAll('.progress-step').forEach((p,i) => {
+      p.classList.remove('active','done');
+      if (i === 0) p.classList.add('active');
+    });
+    document.querySelectorAll('.progress-line').forEach(l => l.classList.remove('done'));
+    document.querySelectorAll('.step-service-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('nome').value = '';
+    document.getElementById('whatsapp').value = '';
+    document.getElementById('nascimento').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('consent').checked = false;
+    initCalendar();
+    scrollToBooking();
+  }
+
+  // ─── POST PROCEDURE MODAL ──────────────────────────────────
+  function openModal() {
+    document.getElementById('postModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('postModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('postModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Secret: click footer logo to open post-procedure (simulating "after procedure")
+  // Also adding a visible link in the footer
+  const footerLogo = document.querySelector('.footer-logo');
+  footerLogo.style.cursor = 'pointer';
+  footerLogo.title = 'Guia pós-procedimento';
+  footerLogo.addEventListener('click', openModal);
+
+  // ─── SCROLL ANIMATIONS ─────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeUp 0.6s ease forwards';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .testimonial-card, .gallery-item').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+
+  // WhatsApp number formatting
+  document.getElementById('whatsapp').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'');
+    if (v.length <= 11) {
+      v = v.replace(/^(\d{2})(\d)/,'($1) $2');
+      v = v.replace(/(\d{5})(\d)/,'$1-$2');
+    }
+    this.value = v;
+  });
+</script>
+
+</body>
+</html>
