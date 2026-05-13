@@ -60,25 +60,6 @@ Sem framework, sem servidor próprio, sem custo de infraestrutura — 100% no pl
 
 ---
 
-## Estrutura do projeto
-
-```
-/
-├── index.html        # Site público com agendamento
-├── admin.html        # Painel administrativo
-├── FIREBASE.md       # Guia de configuração do Firebase
-├── img/              # Imagens do site
-└── README.md
-```
-
----
-
-## Como configurar
-
-Consulte o arquivo [`FIREBASE.md`](./FIREBASE.md) para o passo a passo completo de como conectar o site ao Firebase do zero (leva cerca de 10 minutos).
-
----
-
 ## Crédito
 
 Desenvolvido por **Davi Castro**.
