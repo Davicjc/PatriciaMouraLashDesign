@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Patricia Moura Lash Design</title>
+<style>
+:root{
+  --plum:#4A2F38; --mauve:#9D717C; --mauve-dark:#7A5560;
+  --rose-pale:#D4A5B0; --ivory:#FBF6EF; --cream:#F5EDE3;
+  --text:#2A1A20; --muted:#7A6067; --border:rgba(157,113,124,.2);
+  --shadow:0 4px 24px rgba(74,47,56,.1); --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--ivory);color:var(--text);min-height:100vh;}
+
+/* LOGIN */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--plum);background-image:radial-gradient(ellipse at 20% 50%,rgba(157,113,124,.3),transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(212,165,176,.2),transparent 50%);}
+.login-card{background:var(--ivory);border-radius:20px;padding:48px 44px;width:100%;max-width:420px;box-shadow:0 40px 80px rgba(0,0,0,.3);text-align:center;}
+.login-brand{font-family:Georgia,serif;font-size:26px;color:var(--plum);letter-spacing:.04em;margin-bottom:4px;}
+.login-sub{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mauve);margin-bottom:36px;}
+.login-card label{display:block;text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mauve-dark);margin-bottom:6px;}
+.login-card input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius);background:#fff;font-size:15px;color:var(--text);outline:none;margin-bottom:14px;transition:.2s;}
+.login-card input:focus{border-color:var(--mauve);}
+.login-btn{width:100%;padding:14px;background:var(--plum);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:500;cursor:pointer;transition:.2s;margin-top:4px;}
+.login-btn:hover{background:var(--mauve-dark);}
+.login-error{margin-top:14px;font-size:13px;color:#dc2626;min-height:18px;}
+
+/* TOPBAR */
+#dashboard{display:none;}
+.topbar{background:var(--plum);color:#fff;padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.topbar-brand{font-family:Georgia,serif;font-size:17px;letter-spacing:.04em;}
+.topbar-brand small{display:block;font-family:system-ui;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-pale);margin-top:1px;}
+.topbar-actions{display:flex;gap:8px;}
+.btn-top{padding:7px 16px;border-radius:20px;border:none;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;}
+.btn-refresh{background:rgba(255,255,255,.15);color:#fff;}
+.btn-refresh:hover{background:rgba(255,255,255,.25);}
+.btn-new{background:var(--rose-pale);color:var(--plum);}
+.btn-new:hover{background:#e8bcc7;}
+.btn-logout{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);}
+.btn-logout:hover{background:rgba(255,255,255,.1);}
+
+/* TABS */
+.tabs-nav{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 28px;box-shadow:0 1px 0 var(--border);}
+.tab-btn{padding:14px 22px;border:none;background:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;font-family:inherit;}
+.tab-btn.active{color:var(--plum);border-bottom-color:var(--plum);}
+.tab-btn:hover:not(.active){color:var(--mauve-dark);}
+
+/* CONTENT */
+.content{max-width:1400px;margin:0 auto;padding:28px 28px 60px;}
+.page-title{margin-bottom:24px;}
+.page-title h1{font-family:Georgia,serif;font-size:28px;font-weight:400;color:var(--plum);}
+.page-title p{font-size:13px;color:var(--muted);margin-top:4px;}
+.warn-box{background:#fef3c7;border:1.5px solid #f59e0b;border-radius:var(--radius);padding:12px 18px;font-size:14px;color:#92400e;margin-bottom:20px;display:none;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr;}}
+.stat-card{background:#fff;border-radius:var(--radius);padding:20px 22px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.stat-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mauve);margin-bottom:10px;}
+.stat-value{font-size:32px;font-weight:700;color:var(--plum);line-height:1;margin-bottom:4px;}
+.stat-sub{font-size:12px;color:var(--muted);}
+
+/* FILTERS */
+.filter-bar{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;box-shadow:var(--shadow);}
+.filter-bar input,.filter-bar select{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;color:var(--text);background:var(--ivory);outline:none;transition:.2s;font-family:inherit;}
+.filter-bar input:focus,.filter-bar select:focus{border-color:var(--mauve);}
+.f-search{flex:1;min-width:200px;}
+.btn-clear{padding:8px 16px;background:var(--cream);color:var(--mauve-dark);border:1.5px solid var(--border);border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;}
+.btn-clear:hover{background:var(--border);}
+
+/* TABLE */
+.table-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.table-header-bar{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.table-header-bar h2{font-size:15px;font-weight:600;color:var(--plum);}
+.table-count{font-size:13px;color:var(--muted);}
+.table-scroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+thead th{padding:11px 14px;text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mauve);background:var(--ivory);border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid rgba(157,113,124,.08);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--ivory);}
+td{padding:13px 14px;vertical-align:middle;}
+.td-name{font-weight:600;color:var(--plum);}
+.td-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.td-price{font-weight:600;white-space:nowrap;}
+.status-sel{appearance:none;-webkit-appearance:none;border:none;border-radius:20px;padding:5px 24px 5px 10px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;outline:none;font-family:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
+.status-sel.confirmado{background-color:#dcfce7;color:#16a34a;}
+.status-sel.concluido{background-color:#e0e7ff;color:#4f46e5;}
+.status-sel.cancelado{background-color:#fee2e2;color:#dc2626;}
+.status-sel.pendente{background-color:#fef3c7;color:#d97706;}
+.actions{display:flex;gap:6px;}
+.btn-icon{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;}
+.btn-icon:hover{background:var(--ivory);border-color:var(--mauve);}
+.btn-icon.danger:hover{background:#fee2e2;border-color:#dc2626;}
+.state-msg{text-align:center;padding:56px 20px;color:var(--muted);font-size:15px;}
+.state-msg .ico{font-size:36px;margin-bottom:12px;}
+
+/* ===== GESTÃO DE AGENDA ===== */
+.agenda-layout{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;}
+@media(max-width:1000px){.agenda-layout{grid-template-columns:1fr;}}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);}
+.card-head{padding:20px 22px 16px;border-bottom:1px solid var(--border);}
+.card-head h2{font-family:Georgia,serif;font-size:20px;font-weight:400;color:var(--plum);margin-bottom:4px;}
+.card-head p{font-size:13px;color:var(--muted);}
+.card-body{padding:20px 22px;}
+
+/* Month nav */
+.month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.month-nav-label{font-size:16px;font-weight:600;color:var(--plum);}
+.month-nav-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;color:var(--plum);transition:.2s;}
+.month-nav-btn:hover{background:var(--ivory);border-color:var(--mauve);}
+
+/* Admin calendar grid */
+.acal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.acal-dow{text-align:center;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 2px;font-weight:500;}
+.acal-day{border-radius:8px;padding:8px 6px 6px;min-height:58px;text-align:center;position:relative;transition:.15s;border:1.5px solid transparent;}
+.acal-day.empty{pointer-events:none;}
+.acal-num{display:block;font-size:14px;font-weight:600;color:var(--text);}
+.acal-info{display:block;font-size:10px;margin-top:3px;line-height:1.2;}
+.acal-badge{position:absolute;top:5px;right:5px;min-width:16px;height:16px;border-radius:8px;padding:0 4px;background:var(--plum);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+.acal-day.acal-available{background:var(--ivory);cursor:pointer;}
+.acal-day.acal-available:hover{background:var(--cream);border-color:var(--mauve);}
+.acal-day.acal-available .acal-num{color:var(--text);}
+
+.acal-day.acal-blocked{background:#fee2e2;cursor:pointer;border-color:#fca5a5;}
+.acal-day.acal-blocked:hover{background:#fecaca;}
+.acal-day.acal-blocked .acal-num{color:#dc2626;}
+.acal-day.acal-blocked .acal-info{color:#dc2626;opacity:.85;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+
+.acal-day.acal-nonworking{background:#f3f4f6;pointer-events:none;}
+.acal-day.acal-nonworking .acal-num{color:#9ca3af;}
+.acal-day.acal-past{opacity:.4;pointer-events:none;}
+.acal-day.acal-today{border-color:var(--mauve)!important;}
+.acal-day.acal-today .acal-num{color:var(--plum);}
+
+/* Legend */
+.acal-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+.leg-dot.available{background:var(--ivory);border:1.5px solid var(--border);}
+.leg-dot.blocked{background:#fee2e2;border:1.5px solid #fca5a5;}
+.leg-dot.with-bookings{background:var(--plum);}
+.leg-dot.nonworking{background:#f3f4f6;border:1.5px solid #e5e7eb;}
+
+/* Period block form */
+.period-form{background:var(--ivory);border-radius:var(--radius);padding:16px;border:1px solid var(--border);margin-top:20px;}
+.period-form h3{font-size:14px;font-weight:600;color:var(--plum);margin-bottom:14px;}
+.period-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.period-row .field{display:flex;flex-direction:column;gap:5px;}
+.period-row .field label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mauve);font-weight:500;}
+.period-row .field input{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;background:#fff;outline:none;font-family:inherit;transition:.2s;}
+.period-row .field input:focus{border-color:var(--mauve);}
+.period-row .field.grow{flex:1;min-width:140px;}
+.btn-block-period{padding:10px 20px;background:var(--plum);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.2s;}
+.btn-block-period:hover{background:var(--mauve-dark);}
+.btn-block-period:disabled{opacity:.6;cursor:default;}
+
+/* Blocked list */
+.blocked-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.blocked-item:last-child{border-bottom:none;}
+.blocked-item-info strong{font-size:14px;color:var(--text);}
+.blocked-item-info span{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+.btn-unblock{padding:6px 14px;background:#fff;color:#dc2626;border:1.5px solid #fca5a5;border-radius:8px;font-size:12px;cursor:pointer;font-weight:500;transition:.2s;}
+.btn-unblock:hover{background:#fee2e2;}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(74,47,56,.5);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;box-shadow:0 40px 80px rgba(74,47,56,.3);}
+.modal.sm{max-width:420px;}
+.modal-head{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-head h3{font-family:Georgia,serif;font-size:20px;font-weight:400;color:var(--plum);}
+.modal-x{width:30px;height:30px;border-radius:50%;border:none;background:var(--ivory);cursor:pointer;font-size:18px;color:var(--mauve-dark);display:flex;align-items:center;justify-content:center;}
+.modal-x:hover{background:var(--cream);}
+.modal-body{padding:22px 26px;}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:480px){.m-grid{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mauve);font-weight:500;}
+.field input,.field select,.field textarea{padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;color:var(--text);background:var(--ivory);outline:none;transition:.2s;font-family:inherit;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--mauve);background:#fff;}
+.field textarea{resize:vertical;min-height:68px;}
+.modal-foot{padding:18px 26px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
+.btn-save{padding:10px 24px;background:var(--plum);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:.2s;}
+.btn-save:hover{background:var(--mauve-dark);}
+.btn-save:disabled{opacity:.6;cursor:default;}
+.btn-cancel{padding:10px 24px;background:#fff;color:var(--mauve-dark);border:1.5px solid var(--border);border-radius:8px;font-size:14px;cursor:pointer;}
+.btn-cancel:hover{background:var(--ivory);}
+.btn-danger{padding:10px 24px;background:#dc2626;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;}
+.btn-danger:hover{background:#b91c1c;}
+.btn-danger:disabled{opacity:.6;cursor:default;}
+
+/* Confirm box */
+.confirm-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:380px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(74,47,56,.3);}
+.confirm-box .ico{font-size:32px;margin-bottom:12px;}
+.confirm-box h3{font-size:18px;color:var(--plum);margin-bottom:8px;}
+.confirm-box p{font-size:14px;color:var(--muted);margin-bottom:6px;}
+.confirm-box .reason-tag{font-size:13px;color:var(--mauve-dark);font-style:italic;margin-bottom:20px;}
+.confirm-actions{display:flex;gap:10px;justify-content:center;}
+
+/* Warning box */
+.warn-inline{background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;font-size:13px;color:#92400e;margin-top:12px;display:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--plum);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:999;box-shadow:0 8px 24px rgba(74,47,56,.3);transform:translateY(80px);opacity:0;transition:.3s cubic-bezier(.34,1.56,.64,1);}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{background:#16a34a;}
+.toast.err{background:#dc2626;}
+</style>
+</head>
+<body>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-brand">Patricia Moura</div>
+    <div class="login-sub">Painel Administrativo</div>
+    <label for="loginEmail">E-mail</label>
+    <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email" />
+    <label for="loginPwd">Senha</label>
+    <input type="password" id="loginPwd" placeholder="••••••••" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <p class="login-error" id="loginErr"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <header class="topbar">
+    <div class="topbar-brand">Patricia Moura <small>Painel Administrativo</small></div>
+    <div class="topbar-actions">
+      <button class="btn-top btn-new"     onclick="openNew()" id="btnNew">+ Novo</button>
+      <button class="btn-top btn-refresh" onclick="onRefresh()" id="btnRefresh">↻ Atualizar</button>
+      <button class="btn-top btn-logout"  onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+
+  <nav class="tabs-nav">
+    <button class="tab-btn active" data-tab="agendamentos" onclick="switchTab('agendamentos')">📋 Agendamentos</button>
+    <button class="tab-btn"        data-tab="agenda"        onclick="switchTab('agenda')">📅 Gestão de Agenda</button>
+  </nav>
+
+  <div class="content">
+    <div class="warn-box" id="warnBox">
+      ⚠️ <strong>Firebase não configurado.</strong> Consulte <strong>FIREBASE.md</strong>.
+    </div>
+
+    <!-- ======= TAB: AGENDAMENTOS ======= -->
+    <div id="tabAgendamentos">
+      <div class="page-title">
+        <h1>Agendamentos</h1>
+        <p id="lastUpdate">Carregando…</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total geral</div><div class="stat-value" id="sTotal">—</div><div class="stat-sub">agendamentos</div></div>
+        <div class="stat-card"><div class="stat-label">Este mês</div><div class="stat-value" id="sMonth">—</div><div class="stat-sub">agendamentos</div></div>
+        <div class="stat-card"><div class="stat-label">Esta semana</div><div class="stat-value" id="sWeek">—</div><div class="stat-sub">agendamentos</div></div>
+        <div class="stat-card"><div class="stat-label">Receita do mês</div><div class="stat-value" id="sRevenue">—</div><div class="stat-sub">estimada</div></div>
+      </div>
+
+      <div class="filter-bar">
+        <input class="f-search" type="text" id="fSearch" placeholder="🔍  Buscar por nome ou WhatsApp…" oninput="applyFilters()" />
+        <select id="fStatus"  onchange="applyFilters()">
+          <option value="">Todos os status</option>
+          <option value="confirmado">Confirmado</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+          <option value="pendente">Pendente</option>
+        </select>
+        <select id="fService" onchange="applyFilters()">
+          <option value="">Todos os serviços</option>
+          <option>Volume Egípcio</option><option>Volume Brasileiro</option>
+          <option>Volume Glamour</option><option>Volume Híbrido</option>
+          <option>Manutenção Egípcio</option><option>Manutenção Brasileiro/Glamour</option>
+        </select>
+        <input type="date" id="fFrom" onchange="applyFilters()" title="De" />
+        <input type="date" id="fTo"   onchange="applyFilters()" title="Até" />
+        <button class="btn-clear" onclick="clearFilters()">Limpar</button>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header-bar">
+          <h2>Lista de agendamentos</h2>
+          <span class="table-count" id="tCount"></span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Data</th><th>Hora</th><th>Cliente</th><th>Serviço</th><th>Valor</th><th>Status</th><th>Ações</th></tr>
+            </thead>
+            <tbody id="tBody">
+              <tr><td colspan="7"><div class="state-msg">Carregando…</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /tabAgendamentos -->
+
+    <!-- ======= TAB: AGENDA ======= -->
+    <div id="tabAgenda" style="display:none">
+      <div class="page-title">
+        <h1>Gestão de Agenda</h1>
+        <p>Clique em um dia disponível para bloquear. Clique em um dia bloqueado para desbloquear.</p>
+      </div>
+
+      <div class="agenda-layout">
+        <!-- Calendário -->
+        <div class="card">
+          <div class="card-head">
+            <h2>Calendário</h2>
+            <p>Dias marcados em vermelho não aceitam novos agendamentos pelo site.</p>
+          </div>
+          <div class="card-body">
+            <div class="month-nav">
+              <button class="month-nav-btn" onclick="changeAgendaMonth(-1)">‹</button>
+              <span class="month-nav-label" id="agendaMonthLabel">—</span>
+              <button class="month-nav-btn" onclick="changeAgendaMonth(1)">›</button>
+            </div>
+            <div class="acal-grid" id="agendaCalGrid"></div>
+            <div class="acal-legend">
+              <span class="leg-item"><span class="leg-dot available"></span>Disponível</span>
+              <span class="leg-item"><span class="leg-dot blocked"></span>Bloqueado</span>
+              <span class="leg-item"><span class="leg-dot with-bookings"></span>Tem agendamentos</span>
+              <span class="leg-item"><span class="leg-dot nonworking"></span>Não atende</span>
+            </div>
+
+            <!-- Bloquear período -->
+            <div class="period-form">
+              <h3>Bloquear período (férias, feriados…)</h3>
+              <div class="period-row">
+                <div class="field"><label>De</label><input type="date" id="periodFrom" /></div>
+                <div class="field"><label>Até</label><input type="date" id="periodTo" /></div>
+                <div class="field grow"><label>Motivo</label><input type="text" id="periodReason" placeholder="Ex: Férias de julho" /></div>
+                <button class="btn-block-period" id="btnPeriod" onclick="blockPeriod()">Bloquear período</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de dias bloqueados -->
+        <div class="card">
+          <div class="card-head">
+            <h2>Dias bloqueados</h2>
+            <p>Próximos dias indisponíveis para agendamento.</p>
+          </div>
+          <div class="card-body" id="blockedList">
+            <div class="state-msg" style="padding:24px 0">Carregando…</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tabAgenda -->
+  </div>
+</div>
+
+<!-- MODAL: editar/novo agendamento -->
+<div class="overlay" id="editModal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Editar Agendamento</h3>
+      <button class="modal-x" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="eId" />
+      <div class="m-grid">
+        <div class="field full"><label>Nome completo</label><input type="text"  id="eName" /></div>
+        <div class="field"><label>WhatsApp</label><input type="tel"   id="ePhone" /></div>
+        <div class="field"><label>E-mail</label><input type="email" id="eEmail" /></div>
+        <div class="field"><label>Data</label><input type="date"  id="eDate" /></div>
+        <div class="field"><label>Horário</label>
+          <select id="eTime">
+            <option>09:00</option><option>10:00</option><option>11:00</option>
+            <option>13:00</option><option>14:00</option><option>15:00</option>
+            <option>16:00</option><option>17:00</option><option>18:00</option>
+          </select>
+        </div>
+        <div class="field"><label>Serviço</label>
+          <select id="eService" onchange="autoPrice()">
+            <option>Volume Egípcio</option><option>Volume Brasileiro</option>
+            <option>Volume Glamour</option><option>Volume Híbrido</option>
+            <option>Manutenção Egípcio</option><option>Manutenção Brasileiro/Glamour</option>
+          </select>
+        </div>
+        <div class="field"><label>Valor (R$)</label><input type="number" id="ePrice" /></div>
+        <div class="field"><label>Status</label>
+          <select id="eStatus">
+            <option value="confirmado">Confirmado</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+            <option value="pendente">Pendente</option>
+          </select>
+        </div>
+        <div class="field full"><label>Observações</label><textarea id="eNotes"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" id="saveBtn" onclick="saveEdit()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: bloquear dia -->
+<div class="overlay" id="blockModal" style="display:none" onclick="if(event.target===this)closeBlockModal()">
+  <div class="modal sm">
+    <div class="modal-head">
+      <h3>Bloquear dia</h3>
+      <button class="modal-x" onclick="closeBlockModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="blockDateLabel" style="font-size:15px;font-weight:600;color:var(--plum);margin-bottom:16px;"></p>
+      <div class="field">
+        <label>Motivo (opcional)</label>
+        <input type="text" id="blockReason" placeholder="Ex: Feriado, Férias, Compromisso…" />
+      </div>
+      <div class="warn-inline" id="blockWarning">
+        <span id="blockWarningMsg"></span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:14px;">As clientes não conseguirão agendar para este dia pelo site.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeBlockModal()">Cancelar</button>
+      <button class="btn-danger" id="blockConfirmBtn" onclick="doBlockDay()">Bloquear dia</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: desbloquear dia -->
+<div class="overlay" id="unblockModal" style="display:none">
+  <div class="confirm-box">
+    <div class="ico">🔓</div>
+    <h3 id="unblockDateLabel">Desbloquear dia?</h3>
+    <p class="reason-tag" id="unblockReason"></p>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">O dia voltará a aceitar novos agendamentos pelo site.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeUnblockModal()">Cancelar</button>
+      <button class="btn-save" onclick="doUnblockDay()">Desbloquear</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: excluir agendamento -->
+<div class="overlay" id="delModal" style="display:none">
+  <div class="confirm-box">
+    <div class="ico">🗑️</div>
+    <h3>Excluir agendamento?</h3>
+    <p id="delMsg" style="margin-bottom:20px;">Esta ação não pode ser desfeita.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeDelModal()">Cancelar</button>
+      <button class="btn-danger" id="delBtn">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================
+   FIREBASE CONFIG — mesmas configurações do index.html
+   ===================================================== */
+const firebaseConfig = {
+  apiKey:            'COLE_AQUI',
+  authDomain:        'COLE_AQUI',
+  projectId:         'COLE_AQUI',
+  storageBucket:     'COLE_AQUI',
+  messagingSenderId: 'COLE_AQUI',
+  appId:             'COLE_AQUI'
+};
+
+const _ready = firebaseConfig.apiKey !== 'COLE_AQUI';
+if (_ready) firebase.initializeApp(firebaseConfig);
+const db   = _ready ? firebase.firestore() : null;
+const auth = _ready ? firebase.auth()      : null;
+
+/* ---- CONSTANTES ---- */
+const PRICES = {
+  'Volume Egípcio':185,'Volume Brasileiro':190,'Volume Glamour':210,
+  'Volume Híbrido':180,'Manutenção Egípcio':135,'Manutenção Brasileiro/Glamour':140
+};
+const MONTHS   = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const WEEKDAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+/* ---- ESTADO ---- */
+let all = [], filtered = [];
+let blockedDays = {};                    // { 'YYYY-MM-DD': { reason } }
+let agendaViewMonth = new Date();
+
+/* ===================== AUTH ===================== */
+if (auth) {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display   = 'block';
+      loadBookings();
+    } else {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('dashboard').style.display   = 'none';
+    }
+  });
+} else {
+  document.getElementById('warnBox').style.display     = 'block';
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display   = 'block';
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pwd   = document.getElementById('loginPwd').value;
+  const err   = document.getElementById('loginErr');
+  if (!email || !pwd) { err.textContent = 'Preencha e-mail e senha.'; return; }
+  err.textContent = '';
+  if (!auth) { err.textContent = 'Firebase não configurado.'; return; }
+  try { await auth.signInWithEmailAndPassword(email, pwd); }
+  catch(e) { err.textContent = 'E-mail ou senha incorretos.'; }
+}
+
+async function doLogout() { if (auth) await auth.signOut(); }
+
+/* ===================== TABS ===================== */
+let _currentTab = 'agendamentos';
+
+function switchTab(tab) {
+  _currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(btn =>
+    btn.classList.toggle('active', btn.dataset.tab === tab));
+  document.getElementById('tabAgendamentos').style.display = tab === 'agendamentos' ? 'block' : 'none';
+  document.getElementById('tabAgenda').style.display       = tab === 'agenda'       ? 'block' : 'none';
+  document.getElementById('btnNew').style.display          = tab === 'agendamentos' ? '' : 'none';
+
+  if (tab === 'agenda') {
+    agendaViewMonth = new Date();
+    loadBlockedDaysAdmin();
+  }
+}
+
+function onRefresh() {
+  if (_currentTab === 'agendamentos') loadBookings();
+  else loadBlockedDaysAdmin();
+}
+
+/* ===================== AGENDAMENTOS ===================== */
+async function loadBookings() {
+  if (!db) return;
+  document.getElementById('tBody').innerHTML =
+    '<tr><td colspan="7"><div class="state-msg">Atualizando…</div></td></tr>';
+  try {
+    const snap = await db.collection('bookings').get();
+    all = snap.docs.map(doc => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        createdAt: d.createdAt?.toDate()?.toLocaleString('pt-BR') || '—',
+        name:    d.name    || '', date:    d.date    || '',
+        time:    d.time    || '', service: d.service || '',
+        price:   String(d.price || ''), phone: d.phone || '',
+        email:   d.email   || '', notes:   d.notes   || '',
+        status:  d.status  || 'confirmado'
+      };
+    });
+    document.getElementById('lastUpdate').textContent =
+      'Atualizado em ' + new Date().toLocaleTimeString('pt-BR');
+    applyFilters(); renderStats();
+    // Se agenda está aberta, rerender o calendário com os novos dados
+    if (_currentTab === 'agenda') renderAgendaCalendar();
+  } catch(err) { toast('Erro ao carregar agendamentos', 'err'); console.error(err); }
+}
+
+/* STATS */
+function renderStats() {
+  const now = new Date();
+  const [y, m] = [now.getFullYear(), now.getMonth()];
+  const ws = new Date(now); ws.setDate(now.getDate()-now.getDay()); ws.setHours(0,0,0,0);
+  const we = new Date(ws); we.setDate(ws.getDate()+6); we.setHours(23,59,59,999);
+  const active = all.filter(b => b.status !== 'cancelado');
+  const month  = active.filter(b => { const d=new Date(b.date); return d.getFullYear()===y && d.getMonth()===m; });
+  const week   = active.filter(b => { const d=new Date(b.date); return d>=ws && d<=we; });
+  const rev    = month.reduce((s,b) => s+(parseFloat(b.price)||0), 0);
+  document.getElementById('sTotal').textContent   = active.length;
+  document.getElementById('sMonth').textContent   = month.length;
+  document.getElementById('sWeek').textContent    = week.length;
+  document.getElementById('sRevenue').textContent = 'R$ ' + rev.toLocaleString('pt-BR');
+}
+
+/* FILTERS */
+function applyFilters() {
+  const s  = document.getElementById('fSearch').value.toLowerCase();
+  const st = document.getElementById('fStatus').value;
+  const sv = document.getElementById('fService').value;
+  const fr = document.getElementById('fFrom').value;
+  const to = document.getElementById('fTo').value;
+  filtered = all.filter(b =>
+    (!s  || b.name.toLowerCase().includes(s) || b.phone.includes(s)) &&
+    (!st || b.status===st) && (!sv || b.service===sv) &&
+    (!fr || b.date>=fr)    && (!to || b.date<=to)
+  ).sort((a,b) => a.date<b.date?1:a.date>b.date?-1:a.time<b.time?1:-1);
+  document.getElementById('tCount').textContent =
+    filtered.length===all.length
+      ? `${filtered.length} agendamento${filtered.length!==1?'s':''}`
+      : `${filtered.length} de ${all.length}`;
+  renderTable();
+}
+
+function clearFilters() {
+  ['fSearch','fFrom','fTo'].forEach(id => document.getElementById(id).value='');
+  ['fStatus','fService'].forEach(id   => document.getElementById(id).value='');
+  applyFilters();
+}
+
+/* TABLE */
+function renderTable() {
+  const tb = document.getElementById('tBody');
+  if (!filtered.length) {
+    tb.innerHTML='<tr><td colspan="7"><div class="state-msg"><div class="ico">📅</div>Nenhum agendamento encontrado.</div></td></tr>';
+    return;
+  }
+  tb.innerHTML = filtered.map(b => `
+    <tr>
+      <td>${dateBR(b.date)}<div class="td-sub">${b.createdAt!=='—'?'Rec. '+b.createdAt:''}</div></td>
+      <td><strong>${b.time}</strong></td>
+      <td>
+        <div class="td-name">${x(b.name)}</div>
+        <div class="td-sub">${x(b.phone)}${b.email?' · '+x(b.email):''}</div>
+        ${b.notes?`<div class="td-sub" title="${x(b.notes)}">📝 ${x(b.notes.slice(0,36))}${b.notes.length>36?'…':''}</div>`:''}
+      </td>
+      <td>${x(b.service)}</td>
+      <td class="td-price">R$ ${b.price}</td>
+      <td>
+        <select class="status-sel ${b.status}" onchange="quickStatus('${b.id}',this.value,this)">
+          <option value="confirmado" ${b.status==='confirmado'?'selected':''}>● Confirmado</option>
+          <option value="concluido"  ${b.status==='concluido'?'selected':''}>● Concluído</option>
+          <option value="cancelado"  ${b.status==='cancelado'?'selected':''}>● Cancelado</option>
+          <option value="pendente"   ${b.status==='pendente'?'selected':''}>● Pendente</option>
+        </select>
+      </td>
+      <td>
+        <div class="actions">
+          <button class="btn-icon" title="Copiar WhatsApp" onclick="copyPhone('${x(b.phone)}')">📋</button>
+          <button class="btn-icon" title="Editar"          onclick="openEdit('${b.id}')">✏️</button>
+          <button class="btn-icon danger" title="Excluir"  onclick="askDelete('${b.id}','${x(b.name)}')">🗑️</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/* QUICK STATUS */
+async function quickStatus(id, newStatus, el) {
+  if (!db) return;
+  const booking = all.find(b => b.id===id);
+  if (!booking) return;
+  const oldStatus = booking.status;
+  el.className = `status-sel ${newStatus}`;
+  try {
+    const batch = db.batch();
+    batch.update(db.collection('bookings').doc(id), { status: newStatus });
+    if (newStatus==='cancelado' && oldStatus!=='cancelado')
+      batch.update(db.collection('taken').doc(booking.date),
+        { [booking.time]: firebase.firestore.FieldValue.delete() });
+    else if (newStatus!=='cancelado' && oldStatus==='cancelado')
+      batch.set(db.collection('taken').doc(booking.date), { [booking.time]: id }, { merge: true });
+    await batch.commit();
+    booking.status = newStatus; renderStats(); toast('Status atualizado');
+  } catch(err) {
+    el.value=oldStatus; el.className=`status-sel ${oldStatus}`; toast('Erro ao atualizar','err');
+  }
+}
+
+function copyPhone(phone) {
+  navigator.clipboard.writeText(phone.replace(/\D/g,'')).then(()=>toast('Número copiado!'));
+}
+
+/* EDIT / NEW */
+function openEdit(id) {
+  const b = all.find(a => a.id===id); if (!b) return;
+  document.getElementById('modalTitle').textContent = 'Editar Agendamento';
+  document.getElementById('eId').value=id; document.getElementById('eName').value=b.name;
+  document.getElementById('ePhone').value=b.phone; document.getElementById('eEmail').value=b.email;
+  document.getElementById('eDate').value=b.date;   document.getElementById('eTime').value=b.time;
+  document.getElementById('eService').value=b.service; document.getElementById('ePrice').value=b.price;
+  document.getElementById('eStatus').value=b.status; document.getElementById('eNotes').value=b.notes;
+  document.getElementById('editModal').style.display='flex';
+}
+
+function openNew() {
+  document.getElementById('modalTitle').textContent='Novo Agendamento';
+  document.getElementById('eId').value='NEW'; document.getElementById('eName').value='';
+  document.getElementById('ePhone').value=''; document.getElementById('eEmail').value='';
+  document.getElementById('eDate').value='';  document.getElementById('eTime').value='09:00';
+  document.getElementById('eService').value='Volume Egípcio'; document.getElementById('ePrice').value='185';
+  document.getElementById('eStatus').value='confirmado'; document.getElementById('eNotes').value='';
+  document.getElementById('editModal').style.display='flex';
+}
+
+function autoPrice() {
+  const svc=document.getElementById('eService').value;
+  if(PRICES[svc]) document.getElementById('ePrice').value=PRICES[svc];
+}
+function closeModal() { document.getElementById('editModal').style.display='none'; }
+
+async function saveEdit() {
+  if (!db) { toast('Firebase não configurado','err'); return; }
+  const id=document.getElementById('eId').value, isNew=id==='NEW';
+  const name=document.getElementById('eName').value.trim(), phone=document.getElementById('ePhone').value.trim();
+  const email=document.getElementById('eEmail').value.trim(), date=document.getElementById('eDate').value;
+  const time=document.getElementById('eTime').value, service=document.getElementById('eService').value;
+  const price=parseInt(document.getElementById('ePrice').value)||0, status=document.getElementById('eStatus').value;
+  const notes=document.getElementById('eNotes').value.trim();
+  if (!name||!date) { toast('Preencha nome e data.','err'); return; }
+  const btn=document.getElementById('saveBtn'); btn.disabled=true; btn.textContent='Salvando…';
+  try {
+    if (isNew) {
+      const takenRef=db.collection('taken').doc(date), bookingRef=db.collection('bookings').doc();
+      await db.runTransaction(async tx => {
+        const takenDoc=await tx.get(takenRef);
+        if(takenDoc.exists && takenDoc.data()[time] && status!=='cancelado')
+          throw new Error('Horário já ocupado. Escolha outro.');
+        tx.set(bookingRef,{createdAt:firebase.firestore.FieldValue.serverTimestamp(),name,phone,email,date,time,service,price,notes,status});
+        if(status!=='cancelado') tx.set(takenRef,{[time]:bookingRef.id},{merge:true});
+      });
+    } else {
+      const old=all.find(b=>b.id===id), batch=db.batch();
+      batch.update(db.collection('bookings').doc(id),{name,phone,email,date,time,service,price,notes,status});
+      if (old) {
+        const wasActive=old.status!=='cancelado', isActive=status!=='cancelado', slotChange=old.date!==date||old.time!==time;
+        if(wasActive&&(!isActive||slotChange)) batch.update(db.collection('taken').doc(old.date),{[old.time]:firebase.firestore.FieldValue.delete()});
+        if(isActive&&(!wasActive||slotChange)) batch.set(db.collection('taken').doc(date),{[time]:id},{merge:true});
+      }
+      await batch.commit();
+    }
+    closeModal(); await loadBookings(); toast(isNew?'Agendamento criado':'Agendamento atualizado');
+  } catch(err) { toast(err.message||'Erro ao salvar','err'); }
+  finally { btn.disabled=false; btn.textContent='Salvar'; }
+}
+
+/* DELETE */
+function askDelete(id,name) {
+  document.getElementById('delMsg').textContent=`Excluir o agendamento de ${name}? Esta ação não pode ser desfeita.`;
+  document.getElementById('delBtn').onclick=()=>doDelete(id);
+  document.getElementById('delModal').style.display='flex';
+}
+function closeDelModal() { document.getElementById('delModal').style.display='none'; }
+async function doDelete(id) {
+  closeDelModal(); if(!db) return;
+  try {
+    const booking=all.find(b=>b.id===id), batch=db.batch();
+    batch.delete(db.collection('bookings').doc(id));
+    if(booking&&booking.status!=='cancelado')
+      batch.update(db.collection('taken').doc(booking.date),{[booking.time]:firebase.firestore.FieldValue.delete()});
+    await batch.commit(); await loadBookings(); toast('Agendamento excluído');
+  } catch(err) { toast('Erro ao excluir','err'); }
+}
+
+/* ===================== GESTÃO DE AGENDA ===================== */
+async function loadBlockedDaysAdmin() {
+  if (!db) return;
+  try {
+    const snap = await db.collection('blockedDays').get();
+    blockedDays = {};
+    snap.forEach(doc => { blockedDays[doc.id] = doc.data(); });
+    renderAgendaCalendar();
+    renderBlockedList();
+  } catch(err) { toast('Erro ao carregar agenda','err'); }
+}
+
+function renderAgendaCalendar() {
+  const grid = document.getElementById('agendaCalGrid');
+  const label = document.getElementById('agendaMonthLabel');
+  const y = agendaViewMonth.getFullYear();
+  const m = agendaViewMonth.getMonth();
+  const todayStr = new Date().toISOString().slice(0,10);
+
+  label.textContent = `${MONTHS[m]} ${y}`;
+  grid.innerHTML = '';
+
+  // Cabeçalho dos dias
+  WEEKDAYS.forEach(d => {
+    const el = document.createElement('div');
+    el.className='acal-dow'; el.textContent=d;
+    grid.appendChild(el);
+  });
+
+  // Células vazias antes do dia 1
+  const firstDay = new Date(y, m, 1).getDay();
+  for (let i=0; i<firstDay; i++) {
+    grid.appendChild(Object.assign(document.createElement('div'), {className:'acal-day empty'}));
+  }
+
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  for (let d=1; d<=daysInMonth; d++) {
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dow     = new Date(y, m, d).getDay();
+    const isPast      = dateStr < todayStr;
+    const isToday     = dateStr === todayStr;
+    const isNonWork   = dow===0 || dow===1;
+    const isBlocked   = !!blockedDays[dateStr];
+    const bookingCount = all.filter(b => b.date===dateStr && b.status!=='cancelado').length;
+
+    const el = document.createElement('div');
+    el.className = 'acal-day';
+    el.innerHTML = `<span class="acal-num">${d}</span>`;
+
+    if (bookingCount > 0)
+      el.innerHTML += `<span class="acal-badge" title="${bookingCount} agendamento${bookingCount>1?'s':''}">${bookingCount}</span>`;
+
+    if (isToday) el.classList.add('acal-today');
+
+    if (isPast) {
+      el.classList.add('acal-past');
+    } else if (isNonWork) {
+      el.classList.add('acal-nonworking');
+      el.innerHTML += `<span class="acal-info" style="color:#9ca3af">Não atende</span>`;
+    } else if (isBlocked) {
+      el.classList.add('acal-blocked');
+      const reason = blockedDays[dateStr].reason || 'Bloqueado';
+      el.innerHTML += `<span class="acal-info">${x(reason)}</span>`;
+      el.title = `Bloqueado: ${reason}`;
+      el.addEventListener('click', () => openUnblockConfirm(dateStr));
+    } else {
+      el.classList.add('acal-available');
+      el.addEventListener('click', () => openBlockModal(dateStr, bookingCount));
+    }
+
+    grid.appendChild(el);
+  }
+}
+
+function changeAgendaMonth(delta) {
+  agendaViewMonth = new Date(agendaViewMonth.getFullYear(), agendaViewMonth.getMonth()+delta, 1);
+  renderAgendaCalendar();
+}
+
+function renderBlockedList() {
+  const el = document.getElementById('blockedList');
+  const todayStr = new Date().toISOString().slice(0,10);
+  const upcoming = Object.entries(blockedDays)
+    .filter(([d]) => d >= todayStr)
+    .sort(([a],[b]) => a.localeCompare(b));
+
+  if (!upcoming.length) {
+    el.innerHTML='<p style="font-size:14px;color:var(--muted);text-align:center;padding:20px 0;">Nenhum dia bloqueado próximo.</p>';
+    return;
+  }
+
+  el.innerHTML = upcoming.map(([date, data]) => `
+    <div class="blocked-item">
+      <div class="blocked-item-info">
+        <strong>${dateBR(date)}</strong>
+        ${data.reason?`<span>${x(data.reason)}</span>`:''}
+      </div>
+      <button class="btn-unblock" onclick="openUnblockConfirm('${date}')">Desbloquear</button>
+    </div>
+  `).join('');
+}
+
+/* Bloquear dia individual */
+let _blockDate = null;
+
+function openBlockModal(dateStr, bookingCount) {
+  _blockDate = dateStr;
+  document.getElementById('blockDateLabel').textContent = `📅 ${dateBR(dateStr)}`;
+  document.getElementById('blockReason').value = '';
+  const warn = document.getElementById('blockWarning');
+  if (bookingCount > 0) {
+    warn.style.display = 'block';
+    document.getElementById('blockWarningMsg').textContent =
+      `⚠️ Este dia já tem ${bookingCount} agendamento${bookingCount>1?'s':''} confirmado${bookingCount>1?'s':''}. Bloquear não cancela automaticamente — entre em contato com as clientes.`;
+  } else {
+    warn.style.display = 'none';
+  }
+  document.getElementById('blockModal').style.display = 'flex';
+  setTimeout(()=>document.getElementById('blockReason').focus(), 100);
+}
+
+function closeBlockModal() {
+  document.getElementById('blockModal').style.display='none'; _blockDate=null;
+}
+
+async function doBlockDay() {
+  if (!_blockDate || !db) return;
+  const reason = document.getElementById('blockReason').value.trim();
+  const btn = document.getElementById('blockConfirmBtn');
+  btn.disabled=true; btn.textContent='Bloqueando…';
+  try {
+    await db.collection('blockedDays').doc(_blockDate).set({
+      reason, blockedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    blockedDays[_blockDate] = { reason };
+    closeBlockModal(); renderAgendaCalendar(); renderBlockedList();
+    toast('Dia bloqueado com sucesso');
+  } catch(err) { toast('Erro ao bloquear','err'); }
+  finally { btn.disabled=false; btn.textContent='Bloquear dia'; }
+}
+
+/* Desbloquear dia */
+let _unblockDate = null;
+
+function openUnblockConfirm(dateStr) {
+  _unblockDate = dateStr;
+  document.getElementById('unblockDateLabel').textContent = `Desbloquear ${dateBR(dateStr)}?`;
+  const reason = blockedDays[dateStr]?.reason;
+  const el = document.getElementById('unblockReason');
+  el.textContent = reason ? `Motivo do bloqueio: ${reason}` : '';
+  document.getElementById('unblockModal').style.display='flex';
+}
+
+function closeUnblockModal() {
+  document.getElementById('unblockModal').style.display='none'; _unblockDate=null;
+}
+
+async function doUnblockDay() {
+  if (!_unblockDate || !db) return;
+  try {
+    await db.collection('blockedDays').doc(_unblockDate).delete();
+    delete blockedDays[_unblockDate];
+    closeUnblockModal(); renderAgendaCalendar(); renderBlockedList();
+    toast('Dia desbloqueado');
+  } catch(err) { toast('Erro ao desbloquear','err'); }
+}
+
+/* Bloquear período inteiro */
+async function blockPeriod() {
+  if (!db) return;
+  const from   = document.getElementById('periodFrom').value;
+  const to     = document.getElementById('periodTo').value;
+  const reason = document.getElementById('periodReason').value.trim();
+  if (!from || !to)     { toast('Escolha as datas do período.','err'); return; }
+  if (from > to)        { toast('A data inicial deve ser antes da final.','err'); return; }
+
+  const btn = document.getElementById('btnPeriod');
+  btn.disabled=true; btn.textContent='Bloqueando…';
+
+  try {
+    const batch  = db.batch();
+    const start  = new Date(from+'T12:00:00');
+    const end    = new Date(to+'T12:00:00');
+    const todayStr = new Date().toISOString().slice(0,10);
+    let count = 0;
+
+    for (let d=new Date(start); d<=end; d.setDate(d.getDate()+1)) {
+      const dow     = d.getDay();
+      const dateStr = d.toISOString().slice(0,10);
+      if (dow===0 || dow===1) continue; // pula Dom e Seg
+      if (dateStr < todayStr) continue;  // pula passado
+      batch.set(db.collection('blockedDays').doc(dateStr), {
+        reason, blockedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      blockedDays[dateStr] = { reason };
+      count++;
+    }
+
+    if (count===0) { toast('Nenhum dia útil futuro no período.','err'); return; }
+
+    await batch.commit();
+    document.getElementById('periodFrom').value='';
+    document.getElementById('periodTo').value='';
+    document.getElementById('periodReason').value='';
+    renderAgendaCalendar(); renderBlockedList();
+    toast(`${count} dia${count>1?'s':''} bloqueado${count>1?'s':''}`);
+  } catch(err) { toast('Erro ao bloquear período','err'); }
+  finally { btn.disabled=false; btn.textContent='Bloquear período'; }
+}
+
+/* ===================== UTILS ===================== */
+function dateBR(iso){ if(!iso)return'—'; const[y,m,d]=iso.split('-'); return`${d}/${m}/${y}`; }
+function x(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let _tt;
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=`toast ${type}`;
+  clearTimeout(_tt);
+  requestAnimationFrame(()=>el.classList.add('show'));
+  _tt=setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
