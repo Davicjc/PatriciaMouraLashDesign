@@ -1402,17 +1402,21 @@
           </div>
           <div class="field">
             <label for="fName">Nome completo</label>
-            <input type="text" id="fName" required placeholder="Como devemos te chamar?" />
+            <input type="text" id="fName" required placeholder="Como devemos te chamar?" autocomplete="name" />
           </div>
           <div class="field-row">
             <div class="field">
               <label for="fPhone">WhatsApp</label>
-              <input type="tel" id="fPhone" required placeholder="(xx) 99999-9999" />
+              <input type="tel" id="fPhone" required placeholder="(XX) 99999-9999" maxlength="15" autocomplete="tel" />
             </div>
             <div class="field">
-              <label for="fEmail">E-mail</label>
-              <input type="email" id="fEmail" required placeholder="seu@email.com" />
+              <label for="fCPF">CPF</label>
+              <input type="text" id="fCPF" required placeholder="000.000.000-00" maxlength="14" inputmode="numeric" />
             </div>
+          </div>
+          <div class="field">
+            <label for="fEmail">E-mail</label>
+            <input type="email" id="fEmail" required placeholder="seu@email.com" autocomplete="email" />
           </div>
           <div class="field">
             <label for="fNotes">Observações (opcional)</label>
@@ -1605,6 +1609,59 @@ document.querySelectorAll('.svc-option').forEach(opt=>{
   });
 });
 
+/* ---------- FORMATAÇÃO E VALIDAÇÃO ---------- */
+const _preposicoes = new Set(['de','da','do','dos','das','des','e','em','com','para','por','no','na','nos','nas','ou','ao','à','às','um','uma']);
+
+function capitalizeName(str){
+  return str.split(' ').map((word, i) => {
+    if(!word) return word;
+    const w = word.toLowerCase();
+    if(i > 0 && _preposicoes.has(w)) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(' ');
+}
+
+function formatPhone(val){
+  const d = val.replace(/\D/g,'').slice(0,11);
+  if(d.length <= 2) return d;
+  if(d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  if(d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+}
+
+function formatCPF(val){
+  const d = val.replace(/\D/g,'').slice(0,11);
+  if(d.length <= 3) return d;
+  if(d.length <= 6) return `${d.slice(0,3)}.${d.slice(3)}`;
+  if(d.length <= 9) return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6)}`;
+  return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6,9)}-${d.slice(9)}`;
+}
+
+function validatePhone(val){
+  return val.replace(/\D/g,'').length >= 10;
+}
+
+function validateCPF(val){
+  const d = val.replace(/\D/g,'');
+  if(d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+  let s=0; for(let i=0;i<9;i++) s += +d[i]*(10-i);
+  let r=(s*10)%11; if(r===10||r===11) r=0; if(r !== +d[9]) return false;
+  s=0; for(let i=0;i<10;i++) s += +d[i]*(11-i);
+  r=(s*10)%11; if(r===10||r===11) r=0; return r === +d[10];
+}
+
+document.getElementById('fName').addEventListener('input', function(){
+  const pos = this.selectionStart;
+  this.value = capitalizeName(this.value);
+  try{ this.setSelectionRange(pos, pos); }catch(_){}
+});
+document.getElementById('fPhone').addEventListener('input', function(){
+  this.value = formatPhone(this.value);
+});
+document.getElementById('fCPF').addEventListener('input', function(){
+  this.value = formatCPF(this.value);
+});
+
 /* calendar */
 function renderCalendar(){
   const grid = document.getElementById('calGrid');
@@ -1740,12 +1797,16 @@ async function submitBooking(e){
   if(!state.date){ alert('Escolha uma data.'); return false; }
   if(!state.time){ alert('Escolha um horário.'); return false; }
 
-  const name  = document.getElementById('fName').value.trim();
+  const name  = capitalizeName(document.getElementById('fName').value.trim());
   const phone = document.getElementById('fPhone').value.trim();
+  const cpf   = document.getElementById('fCPF').value.trim();
   const email = document.getElementById('fEmail').value.trim();
   const notes = document.getElementById('fNotes').value.trim();
-  const btn   = document.querySelector('#bookingForm button[type=submit]');
 
+  if(!validatePhone(phone)){ alert('WhatsApp inválido. Informe DDD + número (ex: (34) 99999-9999).'); return false; }
+  if(!validateCPF(cpf)){ alert('CPF inválido. Verifique os números informados.'); return false; }
+
+  const btn = document.querySelector('#bookingForm button[type=submit]');
   btn.disabled = true;
   btn.textContent = 'Enviando…';
 
@@ -1761,7 +1822,7 @@ async function submitBooking(e){
         }
         tx.set(bookingRef, {
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          name, phone, email, notes,
+          name, phone, cpf, email, notes,
           date: state.date, time: state.time,
           service: state.service, price: parseInt(state.price),
           status: 'confirmado'
