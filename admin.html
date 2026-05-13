@@ -380,8 +380,9 @@ td{padding:13px 14px;vertical-align:middle;}
         <div class="field"><label>Horário</label>
           <select id="eTime">
             <option>09:00</option><option>10:00</option><option>11:00</option>
-            <option>13:00</option><option>14:00</option><option>15:00</option>
-            <option>16:00</option><option>17:00</option><option>18:00</option>
+            <option>12:00</option><option>13:00</option><option>14:00</option>
+            <option>15:00</option><option>16:00</option><option>17:00</option>
+            <option>18:00</option><option>19:00</option>
           </select>
         </div>
         <div class="field"><label>Serviço</label>
@@ -801,7 +802,7 @@ function renderAgendaCalendar() {
     const dow     = new Date(y, m, d).getDay();
     const isPast      = dateStr < todayStr;
     const isToday     = dateStr === todayStr;
-    const isNonWork   = dow===0 || dow===1;
+    const isNonWork   = dow===0;
     const isBlocked   = !!blockedDays[dateStr];
     const bookingCount = all.filter(b => b.date===dateStr && b.status!=='cancelado').length;
 
@@ -949,7 +950,7 @@ async function blockPeriod() {
     for (let d=new Date(start); d<=end; d.setDate(d.getDate()+1)) {
       const dow     = d.getDay();
       const dateStr = d.toISOString().slice(0,10);
-      if (dow===0 || dow===1) continue; // pula Dom e Seg
+      if (dow===0) continue; // pula domingo
       if (dateStr < todayStr) continue;  // pula passado
       batch.set(db.collection('blockedDays').doc(dateStr), {
         reason, blockedAt: firebase.firestore.FieldValue.serverTimestamp()

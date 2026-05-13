@@ -1316,7 +1316,7 @@
             <div class="ic">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
             </div>
-            <div><b>Horário</b>Terça a Sábado · 09h às 19h</div>
+            <div><b>Horário</b>Segunda a Sábado · 09h às 20h</div>
           </li>
           <li>
             <div class="ic">
@@ -1696,9 +1696,9 @@ function renderCalendar(){
 
     const isPast = date < today;
     const isBlocked = blockedDaysSet.has(dateStr);
-    if(isPast || dow === 0 || dow === 1 || isBlocked){
+    if(isPast || dow === 0 || isBlocked){
       el.classList.add('disabled');
-      if(isBlocked && !isPast && dow !== 0 && dow !== 1) el.title = 'Dia não disponível';
+      if(isBlocked && !isPast && dow !== 0) el.title = 'Dia não disponível';
     } else {
       el.addEventListener('click', ()=>{
         document.querySelectorAll('.day.selected').forEach(s=>s.classList.remove('selected'));
@@ -1725,7 +1725,7 @@ function changeMonth(delta){
 
 async function renderTimes(){
   const cont = document.getElementById('timeSlots');
-  const slots = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+  const slots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
 
   if(!state.date){
     cont.innerHTML = '';
